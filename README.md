@@ -1,6 +1,7 @@
 # android_device_bqru_BQru-5745L
 device clever
 
+Need try compiling img with `userdebug` to more tests.
 
 
 ### Some references to create DT
