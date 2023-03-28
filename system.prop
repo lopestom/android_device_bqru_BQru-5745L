@@ -1,0 +1,11 @@
+ro.hardware.keystore=sprdtrusty
+sys.usb.controller=musb-hdrc.0.auto
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.vendor.keybox.id.value=BQ5745L0000
+ro.vendor.ko.mount.point=/mnt/vendor
+ro.vendor.product.partitionpath=/dev/block/platform/soc/soc:ap-ahb/20600000.sdio/by-name/
+
+ro.product.hardware=s9863a1h10_go_32b
+
+
+
