@@ -3,7 +3,7 @@
 # Copyright (C) 2023 The TWRP Open Source Project
 #
 
-LOCAL_PATH := device/bqru/BQru-5745L
+LOCAL_PATH := device/bqru/BQru_5745L
 
 # use PRODUCT_SHIPPING_API_LEVEL indicates the first api level,and contorl treble macro
 PRODUCT_SHIPPING_API_LEVEL := 29
