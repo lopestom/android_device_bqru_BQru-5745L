@@ -7,7 +7,7 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
 # Inherit from BQru-5745L device
-$(call inherit-product, device/bqru/BQru-5745L/device.mk)
+$(call inherit-product, device/bqru/BQru_5745L/device.mk)
 
 # Inherit some common Omni stuff.
 $(call inherit-product, vendor/omni/config/common.mk)
@@ -19,7 +19,7 @@ PRODUCT_NAME := omni_BQru_5745L
 PRODUCT_BRAND := BQru
 PRODUCT_MODEL := BQ-5745L
 PRODUCT_MANUFACTURER := BQru
-PRODUCT_RELEASE_NAME := BQru 5745L
+PRODUCT_RELEASE_NAME := BQru_5745L
 
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
