@@ -1,11 +1,27 @@
-ro.hardware.keystore=sprdtrusty
-sys.usb.controller=musb-hdrc.0.auto
-ro.crypto.volume.filenames_mode=aes-256-cts
+# build properties
+ro.product.board=BQru-5745L
+ro.product.hardware=s9863a1h10_go_32b
+ro.vendor.wcn.hardware.product=sharkl3
+ro.vendor.wcn.hardware.etcpath=/vendor/etc
+eguarantee.device.brand=BQru
+eguarantee.device.dh=Waterworld
+eguarantee.device.fw=BQ-5745L_9863_20201204
+eguarantee.device.model=BQ-5745L
+
+# from device/sprd/sharkl3/s9863a1h10_go_32b/system.prop
+ro.custom.build.version=BQ-5745L_V05_20201204
+ro.build.realversion=FS170_TRX_L5703_63F_20201204_VOLTE_W1_8_L1_3_7_20_38_CTP_UDC_165133
+ro.build.nv_prj=_W1_8_L1_3_7_20_38
+ro.vendor.product.partitionpath=/dev/block/platform/soc/soc:ap-ahb/20600000.sdio/by-name/
 ro.vendor.keybox.id.value=BQ5745L0000
 ro.vendor.ko.mount.point=/mnt/vendor
 ro.vendor.product.partitionpath=/dev/block/platform/soc/soc:ap-ahb/20600000.sdio/by-name/
+# end of device/sprd/sharkl3/s9863a1h10_go_32b/system.prop
 
-ro.product.hardware=s9863a1h10_go_32b
+# FRP property for pst device
+ro.frp.pst=/dev/block/platform/soc/soc:ap-ahb/20600000.sdio/by-name/persist
 
-
-
+ro.sf.lcd_density=320
+sys.usb.controller=musb-hdrc.0.auto
+ro.crypto.volume.filenames_mode=aes-256-cts
+# end build properties

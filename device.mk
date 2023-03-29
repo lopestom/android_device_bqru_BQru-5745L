@@ -5,16 +5,14 @@
 
 LOCAL_PATH := device/bqru/BQru-5745L
 
-#For Dynamic Partitions feature
-PRODUCT_USE_DYNAMIC_PARTITIONS :=true
-
-
-BOARD_VNDK_VERSION := current
-
-
 # use PRODUCT_SHIPPING_API_LEVEL indicates the first api level,and contorl treble macro
 PRODUCT_SHIPPING_API_LEVEL := 29
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+
+BOARD_VNDK_VERSION := current
+
+#For Dynamic Partitions feature
+PRODUCT_USE_DYNAMIC_PARTITIONS :=true
 
 # add vndk version
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -28,7 +26,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.crypto.volume.filenames_mode=aes-256-cts
 
-
 # Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.0-service \
@@ -37,7 +34,9 @@ PRODUCT_PACKAGES += \
 # Fastbootd and fastboot HAL
 PRODUCT_PACKAGES += \
     fastbootd \
-    android.hardware.fastboot@1.0-impl
+    android.hardware.fastboot@1.0-impl \
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery
 
 # Keymaster HAL
 PRODUCT_PACKAGES += \
@@ -83,10 +82,11 @@ BOARD_SEPOLICY_DIRS += $(TRUSTY_SEPOLICY_DIR)
 
 
 
+ HIDL
+DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest_soter.xml
 
-DEVICE_MANIFEST_FILE += $(LOCAL_PATH)/manifest_soter.xml
-DEVICE_MANIFEST_FILE += $(LOCAL_PATH)/manifest.xml
-DEVICE_MATRIX_FILE := $(LOCAL_PATH)/compatibility_matrix.xml
 
 
 #TUI relevant

@@ -75,12 +75,14 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
+#TARGET_USERIMAGES_USE_F2FS := true
 
+# Workaround for error copying vendor files to recovery ramdisk
 TARGET_COPY_OUT_VENDOR := vendor
 
-# Partitions
+# System as root
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
+BOARD_SUPPRESS_SECURE_ERASE := true
 
 #for dynamic partitions feature
 BOARD_BUILD_SUPER_IMAGE_BY_DEFAULT := true
@@ -89,49 +91,82 @@ BOARD_SUPER_PARTITION_GROUPS := group_unisoc
 BOARD_GROUP_UNISOC_SIZE := 4299161600
 BOARD_GROUP_UNISOC_PARTITION_LIST := system vendor product
 
+# Init
+TARGET_INIT_VENDOR_LIB := libinit_BQ-5745L
+TARGET_RECOVERY_DEVICE_MODULES := libinit_BQ-5745L
+
 # Crypto
 TW_INCLUDE_CRYPTO := false
 #TW_INCLUDE_CRYPTO_FBE := true
 #TW_INCLUDE_FBE_METADATA_DECRYPT := true
 
 # Hack: prevent anti rollback
-PLATFORM_VERSION := 16.1.0
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := 2099-12-31
+#PLATFORM_VERSION := 16.1.0
+#PLATFORM_SECURITY_PATCH := 2099-12-31
+#VENDOR_SECURITY_PATCH := 2099-12-31
+
+PLATFORM_VERSION := 10
+PLATFORM_SECURITY_PATCH := 2020-11-05
+VENDOR_SECURITY_PATCH := 2020-11-05
 
 #creates the metadata directory
 BOARD_USES_METADATA_PARTITION := true
 
+# Additional binaries & libraries needed for recovery
+TARGET_RECOVERY_DEVICE_MODULES += \
+    libkeymaster4 \
+    libpuresoftkeymasterdevice \
+    ashmemd_aidl_interface-cpp \
+    libashmemd_client
+
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/ashmemd_aidl_interface-cpp.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so
+
 # Recovery
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# Properties
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # For debugging
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 
-# Properties
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-
+# Excludes
 TW_EXCLUDE_TWRPAPP := true
 TW_EXCLUDE_APEX := true
 
 # Show build time on the splash screen
-TW_DEVICE_VERSION=$(shell date '+%Y%m%d')
-
+TW_DEVICE_VERSION=$(shell date '+%Y%m%d') by sprd Team
+ 
 # TWRP Configuration
-TW_THEME := portrait_hdpi
-TW_NO_SCREEN_TIMEOUT := true
-TW_MAX_BRIGHTNESS := 255
-TW_DEFAULT_BRIGHTNESS := 190
 TW_EXTRA_LANGUAGES := false
 #TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
-TARGET_USES_MKE2FS := true
 TW_INCLUDE_NTFS_3G := true
+TW_NO_SCREEN_BLANK := true
 
+# Use mke2fs to create ext4 images
+TARGET_USES_MKE2FS := true
+
+# Resolution
+TW_THEME := portrait_hdpi
+DEVICE_SCREEN_WIDTH := 720
+DEVICE_SCREEN_HEIGHT := 1440
+
+# Display
+TW_NO_SCREEN_TIMEOUT := true
+TW_MAX_BRIGHTNESS := 255
+TW_DEFAULT_BRIGHTNESS := 190
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 
 # ?? Need confirm
 HAVE_SELINUX := true
@@ -143,43 +178,43 @@ BOARD_AVB_ENABLE := true
 
 #config key&version for vbmeta
 BOARD_AVB_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_KEY_PATH:=$(CONFIG_PATH)/rsa4096_vbmeta.pem
-BOARD_AVB_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_vbmeta/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_vbmeta=//gp' )
+BOARD_AVB_KEY_PATH:=  external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 
 #config key&version for boot
-BOARD_AVB_BOOT_KEY_PATH:=$(CONFIG_PATH)/rsa4096_boot.pem
+BOARD_AVB_BOOT_KEY_PATH:= external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_BOOT_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_BOOT_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_boot/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_boot=//gp' )
+BOARD_AVB_BOOT_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_BOOT_ROLLBACK_INDEX_LOCATION:=1
 
 #config key&version for recovery
-BOARD_AVB_RECOVERY_KEY_PATH:=$(CONFIG_PATH)/rsa4096_recovery.pem
+BOARD_AVB_RECOVERY_KEY_PATH:= external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_RECOVERY_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_RECOVERY_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_boot/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_boot=//gp' )
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION:=2
 
 #config key&version for system
 BOARD_AVB_VBMETA_SYSTEM:=system product
-BOARD_AVB_VBMETA_SYSTEM_KEY_PATH:=$(CONFIG_PATH)/rsa4096_system.pem
+BOARD_AVB_VBMETA_SYSTEM_KEY_PATH:= external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_VBMETA_SYSTEM_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_system/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_system=//gp' )
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION:=3
 
 #config key&version for vendor
 BOARD_AVB_VBMETA_VENDOR:= vendor
-BOARD_AVB_VBMETA_VENDOR_KEY_PATH:=$(CONFIG_PATH)/rsa4096_vendor.pem
+BOARD_AVB_VBMETA_VENDOR_KEY_PATH:= external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_VBMETA_VENDOR_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_vendor/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_vendor=//gp' )
+BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX_LOCATION:=4
 
 #config key&version for socko
-BOARD_AVB_SOCKO_KEY_PATH:=$(CONFIG_PATH)/rsa4096_socko.pem
+BOARD_AVB_SOCKO_KEY_PATH:= external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_SOCKO_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_SOCKO_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_socko/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_socko=//gp' )
+BOARD_AVB_SOCKO_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_SOCKO_ROLLBACK_INDEX_LOCATION:=11
 
 #config key&version for odmko
 BOARD_AVB_ODMKO_KEY_PATH:=$(CONFIG_PATH)/rsa4096_odmko.pem
 BOARD_AVB_ODMKO_ALGORITHM:=SHA256_RSA4096
-BOARD_AVB_ODMKO_ROLLBACK_INDEX:=$(shell sed -n '/avb_version_odmko/p'  $(CONFIG_PATH)/version.cfg | sed -n 's/avb_version_odmko=//gp' )
+BOARD_AVB_ODMKO_ROLLBACK_INDEX:=$(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_ODMKO_ROLLBACK_INDEX_LOCATION:=12
