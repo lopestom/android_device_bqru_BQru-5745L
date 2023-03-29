@@ -3,7 +3,7 @@
 # Copyright (C) 2023 The TWRP Open Source Project
 #
 
-DEVICE_PATH := device/bqru/BQru-5745L
+DEVICE_PATH := device/bqru/BQru_5745L
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
