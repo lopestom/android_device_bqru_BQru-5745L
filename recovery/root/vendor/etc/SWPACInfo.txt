@@ -1,1 +1,0 @@
-Unisoc: s9863a1h10_go_32b_Natv_user_gms
