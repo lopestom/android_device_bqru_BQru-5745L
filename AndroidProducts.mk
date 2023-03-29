@@ -4,10 +4,10 @@
 #
 
 PRODUCT_MAKEFILES := \
-     $(LOCAL_DIR)/omni_BQru-5745L.mk
+     $(LOCAL_DIR)/omni_BQru_5745L.mk
 
      
 COMMON_LUNCH_CHOICES := \
-    omni_BQru-5745L-eng \
-    omni_BQru-5745L-userdebug \
-    omni_BQru-5745L-user
+    omni_BQru_5745L-eng \
+    omni_BQru_5745L-userdebug \
+    omni_BQru_5745L-user
