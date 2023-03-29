@@ -77,25 +77,25 @@ PRODUCT_PACKAGES += \
    vendor.sprd.hardware.soter@1.0-service
 
 
-TRUSTY_SEPOLICY_DIR :=vendor/sprd/proprietories-source/sprdtrusty/vendor/sprd/modules/common/sepolicy_androidq
-BOARD_SEPOLICY_DIRS += $(TRUSTY_SEPOLICY_DIR)
+# TRUSTY_SEPOLICY_DIR :=vendor/sprd/proprietories-source/sprdtrusty/vendor/sprd/modules/common/sepolicy_androidq
+# BOARD_SEPOLICY_DIRS += $(TRUSTY_SEPOLICY_DIR)
 
 
 
- HIDL
-DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
-DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
-DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest_soter.xml
+# HIDL
+# DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
+#DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
+# DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest_soter.xml
 
 
 
 #TUI relevant
-#ifeq ($(strip $(BOARD_TUI_CONFIG)), true)
+## ifeq ($(strip $(BOARD_TUI_CONFIG)), true)
 #PRODUCT_PACKAGES += \
-  tuica \
-  libconfirmationui \
-  android.hardware.confirmationui@1.0-service \
-  tuiwakelock \
-  vendor.sprd.hardware.tuistate@1.0-service
+#  tuica \
+#  libconfirmationui \
+#  android.hardware.confirmationui@1.0-service \
+#  tuiwakelock \
+#  vendor.sprd.hardware.tuistate@1.0-service
  
 
