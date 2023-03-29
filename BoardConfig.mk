@@ -43,8 +43,19 @@ BUILD_BROKEN_DUP_RULES := true
 TARGET_OTA_ASSERT_DEVICE := BQru-5745L
 
 # Kernel
-#BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
-BOARD_KERNEL_CMDLINE := earlycon=sprd_serial,0x70100000,115200n8 console=ttyS1,115200n8 loglevel=1 init=/init root=/dev/ram0 rw androidboot.hardware=s9863a1h10_go_32b androidboot.dtbo_idx=0 printk.devkmsg=on androidboot.boot_devices=soc/soc:ap-ahb/20600000.sdio
+#BOARD_KERNEL_CMDLINE := earlycon=sprd_serial,0x70100000,115200n8 console=ttyS1,115200n8 loglevel=1 init=/init root=/dev/ram0 rw androidboot.hardware=s9863a1h10_go_32b androidboot.dtbo_idx=0 printk.devkmsg=on androidboot.boot_devices=soc/soc:ap-ahb/20600000.sdio
+#BOARD_KERNEL_CMDLINE += earlycon=sprd_serial,0x70100000,115200n8
+#BOARD_KERNEL_CMDLINE += console=ttyS1,115200n8
+#BOARD_KERNEL_CMDLINE += loglevel=1
+#BOARD_KERNEL_CMDLINE += init=/init
+#BOARD_KERNEL_CMDLINE += root=/dev/ram0
+#BOARD_KERNEL_CMDLINE += rw
+#BOARD_KERNEL_CMDLINE += androidboot.hardware=s9863a1h10_go_32b
+#BOARD_KERNEL_CMDLINE += androidboot.dtbo_idx=0
+#BOARD_KERNEL_CMDLINE += printk.devkmsg=on
+#BOARD_KERNEL_CMDLINE += androidboot.boot_devices=soc/soc:ap-ahb/20600000.sdio
+
+BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8
 BOARD_KERNEL_IMAGE_NAME := zImage
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/zImage
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
