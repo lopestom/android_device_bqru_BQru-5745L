@@ -14,8 +14,8 @@ $(call inherit-product, vendor/omni/config/common.mk)
 
 
 # Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := BQru-5745L
-PRODUCT_NAME := omni_BQru-5745L
+PRODUCT_DEVICE := BQru_5745L
+PRODUCT_NAME := omni_BQru_5745L
 PRODUCT_BRAND := BQru
 PRODUCT_MODEL := BQ-5745L
 PRODUCT_MANUFACTURER := BQru
